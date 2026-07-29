@@ -13,7 +13,7 @@ export const protect = async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
 
       // Decodificamos el token usando nuestra clave secreta del .env
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'clave_secreta_generada');
 
       // Buscamos al usuario en la BD por el ID del token y lo adjuntamos a la petición (req.user)
       // Usa .select('-password') para EXCLUIR la contraseña por seguridad

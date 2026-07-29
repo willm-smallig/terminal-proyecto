@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 const generateToken = (id, role) => {
   // Firmamos el token guardando el ID y el ROL del usuario dentro del payload
-  return jwt.sign({ id, role }, process.env.JWT_SECRET, {
+  return jwt.sign({ id, role }, process.env.JWT_SECRET || 'clave_secreta_generada', {
     expiresIn: '30d', // El token será válido durante 30 días
   });
 };

@@ -10,7 +10,10 @@ connectDB(); // Conecta a la base de datos en MongoDB Atlas
 const app = express(); // Inicializa la aplicación de Express
 
 // Middlewares globales
-app.use(cors()); // Permite la comunicación con el frontend
+app.use(cors({
+  origin: ['https://terminal-proyecto-fin.vercel.app'],
+  credentials: true
+})); // Permite la comunicación con el frontend
 app.use(express.json()); // Permite recibir datos en formato JSON
 app.use('/api/auth', authRoutes); // Agregamos la ruta
 app.use('/api/employees', employeeRoutes); // Agregamos la ruta
