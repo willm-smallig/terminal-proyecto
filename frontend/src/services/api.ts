@@ -4,7 +4,7 @@ import type { AuthResponse, Employee } from "@/types";
 
 // Instancia global de Axios con la URL base de nuestro servidor Node.js
 const API = axios.create({
-  baseURL: "http://localhost:5000/api", // URL del Backend Express
+  baseURL: "https://back-render-itwv.onrender.com/api", // URL del Backend Express
 });
 
 // Interceptor de peticiones (Inyección automática del Token JWT)
