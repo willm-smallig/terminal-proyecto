@@ -11,16 +11,16 @@ import { protect, authorizeRoles } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// TODAS las rutas de empleados requieren estar autenticado (middleware protect)
+// Todas las rutas de empleados requieren estar autenticado
 router.use(protect);
 
-// Ruta raíz: GET (Listar todos) / POST (Crear nuevo)
+// Ruta raíz: GET "Listar todos" - POST "Crear nuevo"
 router
   .route('/')
   .get(getEmployees) // Accesible por cualquier empleado autenticado
   .post(authorizeRoles('Encargado Plantilla'), createEmployee); // Solo 'Encargado Plantilla'
 
-// Ruta por ID: GET (Ver uno) / PUT (Editar) / DELETE (Eliminar)
+// Ruta por ID: GET "Ver uno" - PUT "Editar" - DELETE "Eliminar"
 router
   .route('/:id')
   .get(getEmployeeById) // Ver ficha individual de empleado

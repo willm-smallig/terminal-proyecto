@@ -1,0 +1,168 @@
+/*Variables de color del tema terminal */
+:root {
+  --terminal-bg: #0d1117;
+  --terminal-panel: #161b22;
+  --terminal-border: #30363d;
+  --terminal-titlebar: #21262d;
+  --terminal-green: #00ff66;
+  --terminal-amber: #ffb000;
+  --terminal-red: #ff5555;
+  --terminal-muted: #8b949e;
+  --terminal-font: monospace;
+}
+
+/* Fondo de la página */
+.login-page-content {
+  --background: var(--terminal-bg);
+}
+
+/* Contenedor principal: ventana de terminal */
+.terminal-window {
+  max-width: 650px;
+  margin: 50px auto;
+  background: var(--terminal-panel);
+  border: 1px solid var(--terminal-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  font-family: var(--terminal-font);
+}
+
+/* Barra superior de la terminal */
+.terminal-titlebar {
+  background: var(--terminal-titlebar);
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--terminal-border);
+}
+
+.terminal-titlebar__dots {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminal-dot--red {
+  background: var(--terminal-red);
+}
+
+.terminal-dot--amber {
+  background: var(--terminal-amber);
+}
+
+.terminal-dot--green {
+  background: var(--terminal-green);
+}
+
+.terminal-titlebar__title {
+  color: var(--terminal-muted);
+  font-size: 0.85rem;
+}
+
+/* Historial / Logs de consola */
+.terminal-logs {
+  padding: 20px;
+  min-height: 180px;
+  background: var(--terminal-bg);
+  color: var(--terminal-green);
+  font-size: 0.9rem;
+}
+
+.terminal-logs__line {
+  margin-bottom: 6px;
+}
+
+/* Sección del formulario */
+.terminal-form-section {
+  padding: 20px;
+  border-top: 1px solid var(--terminal-border);
+  background: var(--terminal-panel);
+}
+
+/* Fila de input: prompt + input + botón */
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Prompts */
+.terminal-prompt--green {
+  color: var(--terminal-green);
+  font-weight: bold;
+}
+
+.terminal-prompt--amber {
+  color: var(--terminal-amber);
+  font-weight: bold;
+}
+
+/* Inputs de texto */
+.terminal-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--terminal-green);
+  font-family: var(--terminal-font);
+  font-size: 1rem;
+  width: 100%;
+}
+
+.terminal-input--password {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--terminal-panel); /* Oculta el texto*/
+  caret-color: var(--terminal-green); /* Mantiene el cursor parpadeante */
+  font-family: var(--terminal-font);
+  font-size: 1rem;
+  width: 100%;
+}
+
+/* Botones de la terminal */
+.terminal-btn--green {
+  --color: var(--terminal-green);
+}
+
+.terminal-btn--amber {
+  --color: var(--terminal-amber);
+}
+
+/* Info del operador (Paso 2) */
+.terminal-operator-info {
+  margin-bottom: 10px;
+  color: var(--terminal-muted);
+  font-size: 0.85rem;
+}
+
+.terminal-operator-info__username {
+  color: var(--terminal-green);
+}
+
+.terminal-operator-info__role {
+  color: var(--terminal-amber);
+}
+
+/* Nota de seguridad */
+.terminal-security-note {
+  font-size: 0.75rem;
+  color: var(--terminal-muted);
+  margin-top: 8px;
+}
+
+/* Mensaje de error */
+.terminal-error {
+  margin-top: 15px;
+  color: var(--terminal-red);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

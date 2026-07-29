@@ -40,6 +40,8 @@ export const createEmployee = async (req, res) => {
   try {
     const { fullName, dni, email, phone, corporateRole, shift, department } = req.body;
 
+    console.log('[createEmployee] Body recibido:', JSON.stringify(req.body, null, 2));
+
     // Comprobar si ya existe un empleado con el mismo DNI o Email
     const existingEmployee = await Employee.findOne({ $or: [{ dni }, { email }] });
     if (existingEmployee) {
@@ -54,19 +56,20 @@ export const createEmployee = async (req, res) => {
       corporateRole,
       shift,
       department,
-      updatedBy: req.user._id, // Guardamos la referencia de qué admin creó el registro
+      updatedBy: req.user._id, // Guarda la referencia de qué admin creó el registro
     });
 
     const createdEmployee = await employee.save();
     res.status(201).json(createdEmployee);
   } catch (error) {
+    console.error('[createEmployee] Error:', error.message);
     res.status(400).json({ message: 'Datos de empleado no válidos', error: error.message });
   }
 };
 
 // @desc    Actualizar datos o turno de un empleado
 // @route   PUT /api/employees/:id
-// @access  Privado ('Encargado Plantilla' y 'Manejador Horarios')
+// @access  Privado (Encargado Plantilla y Manejador Horarios)
 export const updateEmployee = async (req, res) => {
   try {
     const employee = await Employee.findById(req.params.id);
@@ -75,7 +78,7 @@ export const updateEmployee = async (req, res) => {
       return res.status(404).json({ message: 'Empleado no encontrado' });
     }
 
-    // POLITICA DE ROLES INTERNA:
+    // Politica de roles interna:
     // Si es 'Manejador Horarios', solo le permitimos modificar el campo 'shift' (turno) y 'status'
     if (req.user.role === 'Manejador Horarios') {
       employee.shift = req.body.shift || employee.shift;

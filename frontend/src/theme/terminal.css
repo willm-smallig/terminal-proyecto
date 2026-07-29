@@ -1,0 +1,105 @@
+/* src/theme/terminal.css */
+
+/* Tipografía y fuentes retro terminal */
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=VT323&display=swap");
+
+:root {
+  --terminal-bg: #0d1117; /* Fondo oscuro estilo consola */
+  --terminal-card-bg: #161b22; /* Fondo de bloques y tarjetas */
+  --terminal-green: #9798ad; /* Texto y prompts de comandos */
+  --terminal-amber: #ffb000; /* Advertencias y roles de supervisión */
+  --terminal-red: #ff5555; /* Errores y botón de eliminación */
+  --terminal-blue: #58a6ff; /* Enlaces e información especial */
+  --terminal-dim: #8b949e; /* Textos secundarios / comentarios */
+  --terminal-border: #30363d; /* BORDES FINOS DE TABLAS Y PANELES */
+
+  --ion-font-family: "Fira Code", "VT323", monospace;
+}
+
+/* Reinicio global de ionic a estilo consola */
+ion-content,
+ion-page,
+ion-app {
+  --background: var(--terminal-bg) !important;
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-green) !important;
+  font-family: "Fira Code", monospace !important;
+}
+
+/* Estilo de cabecera (prompt corporativo) */
+ion-header,
+ion-toolbar {
+  --background: #161b22 !important;
+  --color: var(--terminal-green) !important;
+  border-bottom: 1px solid var(--terminal-border);
+}
+
+ion-title {
+  font-family: "VT323", monospace !important;
+  font-size: 1.6rem !important;
+  letter-spacing: 2px;
+  color: var(--terminal-green);
+}
+
+/* Tarjetas y contenedores CLI */
+ion-card,
+.terminal-window {
+  background: var(--terminal-card-bg) !important;
+  border: 1px solid var(--terminal-border) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  color: #c9d1d9 !important;
+}
+
+/* Inputs y campos de texto estilo línea de comandos */
+ion-item {
+  --background: #0d1117 !important;
+  --color: var(--terminal-green) !important;
+  --border-color: var(--terminal-border) !important;
+}
+
+ion-input,
+ion-select,
+ion-textarea {
+  --color: var(--terminal-green) !important;
+  --placeholder-color: var(--terminal-dim) !important;
+  font-family: "Fira Code", monospace !important;
+}
+
+/* Botones retro terminal */
+ion-button {
+  --border-radius: 4px !important;
+  font-family: "Fira Code", monospace !important;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+ion-button::part(native) {
+  border: 1px solid var(--terminal-green);
+}
+
+/* Efecto de línea scanline */
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 9999;
+  opacity: 0.3;
+}
+
+/* Prompt de entrada con el símbolo '$' */
+.cli-prompt {
+  color: var(--terminal-green);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.cli-comment {
+  color: var(--terminal-dim);
+  font-style: italic;
+}

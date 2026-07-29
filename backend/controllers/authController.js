@@ -9,13 +9,13 @@ export const registerUser = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
 
-    // 1. Comprobar si el usuario o email ya existen
+    // Comprobar si el usuario o email ya existen
     const userExists = await User.findOne({ $or: [{ email }, { username }] });
     if (userExists) {
       return res.status(400).json({ message: 'El usuario o el email ya están registrados' });
     }
 
-    // 2. Crear el nuevo usuario (el cifrado de clave se hace solo en User.js)
+    // Crear el nuevo usuario (el cifrado de clave se hace solo en User.js)
     const user = await User.create({
       username,
       email,
@@ -23,7 +23,7 @@ export const registerUser = async (req, res) => {
       role: role || 'Plantilla Mañana', // Si no manda rol, se asigna 'Plantilla Mañana' por defecto
     });
 
-    // 3. Responder con los datos públicos del usuario + su Token JWT
+    //  Responder con los datos públicos del usuario + su Token JWT
     if (user) {
       res.status(201).json({
         _id: user._id,
@@ -45,10 +45,12 @@ export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1. Buscar el usuario por su email
-    const user = await User.findOne({ email });
+    // Buscar el usuario por email O por username
+    const user = await User.findOne({
+      $or: [{ email }, { username: email }],
+    });
 
-    // 2. Verificar que el usuario existe Y que la contraseña coincide
+    // Verificar que el usuario existe Y que la contraseña coincide
     // (usamos el método matchPassword que creamos en el modelo User.js)
     if (user && (await user.matchPassword(password))) {
       res.json({
@@ -63,5 +65,28 @@ export const loginUser = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: 'Error en el servidor', error: error.message });
+  }
+};
+
+// @desc    Verificar si existe un nombre de usuario en el sistema CLI
+// @route   POST /api/auth/verify-user
+// @access  Público
+export const verifyUsername = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: `El operador '${username}' no está registrado en el sistema` });
+    }
+
+    res.json({
+      exists: true,
+      username: user.username,
+      role: user.role,
+      message: `Operador identificado. Introduzca clave de acceso para ${user.role}.`
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error en el servidor al verificar usuario', error: error.message });
   }
 };

@@ -6,7 +6,7 @@ import User from '../models/User.js'; // Importamos User para verificar la ident
 export const protect = async (req, res, next) => {
   let token;
 
-  // Los tokens profesionales se envían en la cabecera 'Authorization' como 'Bearer <TOKEN>'
+  // Los tokens profesionales se envían en la cabecera 'Authorization'
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
       // Extraemos el token quitando la palabra 'Bearer '
@@ -16,10 +16,10 @@ export const protect = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Buscamos al usuario en la BD por el ID del token y lo adjuntamos a la petición (req.user)
-      // Usamos .select('-password') para EXCLUIR la contraseña por seguridad
+      // Usa .select('-password') para EXCLUIR la contraseña por seguridad
       req.user = await User.findById(decoded.id).select('-password');
 
-      // next() le dice a Express: "Todo ok, pasa al siguiente paso/controlador"
+      // next() le dice a Express: "Todo ok, pasa al siguiente paso, al controlador"
       next();
     } catch (error) {
       return res.status(401).json({ message: 'No autorizado, token fallido o expirado' });
