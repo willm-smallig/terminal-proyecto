@@ -9,10 +9,18 @@ import {
   IonChip,
 } from "@ionic/react";
 import { logOutOutline, terminalOutline } from "ionicons/icons";
+import { useHistory } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export const TerminalHeader: React.FC = () => {
   const { user, logout } = useAuth();
+  const history = useHistory();
+
+  // Cierra sesión, limpia datos y redirige al login
+  const handleLogout = () => {
+    logout();
+    history.push("/login");
+  };
 
   // Asigna un color según el rol del empleado
   const getRoleBadgeColor = (role?: string) => {
@@ -94,7 +102,7 @@ export const TerminalHeader: React.FC = () => {
             <IonButton
               fill="clear"
               size="small"
-              onClick={logout}
+              onClick={handleLogout}
               style={{
                 "--color": "#ff5555",
                 fontFamily: "monospace",

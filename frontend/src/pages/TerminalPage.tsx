@@ -1,6 +1,7 @@
 // src/pages/TerminalPage.tsx
 import React, { useState, useEffect, useRef } from "react";
 import { IonPage, IonContent } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 import { TerminalHeader } from "../components/TerminalHeader";
 import { useAuth } from "../context/AuthContext";
 import { Employee } from "../types";
@@ -13,7 +14,8 @@ import {
 import "./TerminalPage.css";
 
 export const TerminalPage: React.FC = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const routerHistory = useHistory();
   const [commandInput, setCommandInput] = useState<string>("");
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [history, setHistory] = useState<
@@ -87,13 +89,29 @@ Comandos disponibles:
                             : Ejemplo: add "Juan Perez" 12345678A juan@emp.com "Plantilla Mañana" "Mañana"
   shift <id> <nuevo_turno>  : Encargado / Manejador: Cambia turno (Mañana / Tarde / Partido).
   delete <id>               : Solo Encargado: Elimina un empleado por su ID.
-  clear                     : Limpia la pantalla de la terminal.`,
+  clear                     : Limpia la pantalla de la terminal.
+  exit                      : Cierra la sesión y vuelve al login.`,
             },
           ]);
           break;
 
         case "clear":
           setHistory([]);
+          break;
+
+        case "exit":
+        case "logout":
+          setHistory((prev) => [
+            ...prev,
+            {
+              type: "res",
+              content: "Cerrando sesión... Hasta pronto.",
+            },
+          ]);
+          setTimeout(() => {
+            logout();
+            routerHistory.push("/login");
+          }, 800);
           break;
 
         case "list":

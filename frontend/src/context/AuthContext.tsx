@@ -69,9 +69,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   // Función de Cierre de Sesión (Logout)
+  // Limpia el estado de autenticación y toda huella de sesión en localStorage
   const logout = () => {
     setUser(null);
     localStorage.removeItem("user_session");
+    localStorage.removeItem("token");
   };
 
   return (
